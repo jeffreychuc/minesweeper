@@ -27,6 +27,17 @@ class Board
   end
 
   def render
+
+  end
+
+  def debug_render
+    @grid.each do |row|
+      row.each do |tile|
+        print "B " if tile.bomb
+        print "#{tile.fringe}" if !tile.bomb
+      end
+      print "\n"
+    end
   end
 
   def populate_bombs
