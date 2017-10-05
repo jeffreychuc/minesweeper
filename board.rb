@@ -1,5 +1,6 @@
 require_relative 'tile'
 require 'colorize'
+require 'byebug'
 class Board
 
   def initialize
@@ -12,7 +13,7 @@ class Board
   end
 
   def win?
-    @non_bombs
+    @non_bombs.all?{ |tile| tile.hidden == false }
   end
 
   def find_non_bombs
@@ -28,13 +29,32 @@ class Board
   end
 
   def render
-
+    @grid.each do |row|
+      row.each do |tile|
+        #byebug
+        if tile.bomb and !tile.hidden
+          print "💣 "
+        elsif tile.flag
+          print "🚩 "
+        elsif !tile.hidden
+          if tile.fringe>0
+            print "#{tile.fringe} "
+          else
+            print "_ "
+          end
+        else
+          print "◼️ "
+        end
+      end
+      print "\n"
+    end
+    nil
   end
 
   def debug_render
     @grid.each do |row|
       row.each do |tile|
-        print "B ".red if tile.bomb
+        print "💣 ".red if tile.bomb
         print "#{tile.fringe} " if !tile.bomb
       end
       print "\n"
