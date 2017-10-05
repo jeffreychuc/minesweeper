@@ -1,6 +1,6 @@
 class Tile
 
-  attr_accessor :fringe, :state
+  attr_accessor :fringe, :state, :bomb 
 
   def initialize(bomb=false)
     @bomb = bomb
