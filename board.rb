@@ -79,8 +79,6 @@ class Board
     @grid[pos[0]][pos[1]]
   end
 
-
-
   def set_fringe(pos)
     start = [pos[0]-1, pos[1]-1]
     (0...3).each do |row_offset|
