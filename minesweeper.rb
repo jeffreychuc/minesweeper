@@ -9,9 +9,15 @@ class Minesweeper
   def run
     until @board.over?
       @board.render
+      @board.debug_render
       play_turn
     end
-    #display won message
+    @board.render
+    if @board.lose
+      puts "sucks to suck"
+    else
+      puts "congraterationssss! a winner is u"
+    end
   end
 
   def play_turn
@@ -28,10 +34,17 @@ class Minesweeper
       @board[pos].flag = true
     when "g"
       if @board[pos].bomb
+        @board[pos].explode = true
+        @board.set_visible
+        # run set all visble
         @board.lose = true
       else
         @board[pos].hidden = false
       end
     end
   end
+
 end
+
+game = Minesweeper.new
+game.run

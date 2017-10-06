@@ -3,6 +3,8 @@ require 'colorize'
 require 'byebug'
 class Board
 
+  attr_accessor :lose
+
   def initialize
     @size = { l: 9, w: 9 }
     @grid = Array.new(9){Array.new(9){Tile.new}}
@@ -29,10 +31,13 @@ class Board
   end
 
   def render
+    system("clear")
     @grid.each do |row|
       row.each do |tile|
         #byebug
-        if tile.bomb and !tile.hidden
+        if tile.explode
+          print "💥 "
+        elsif tile.bomb and !tile.hidden
           print "💣 "
         elsif tile.flag
           print "🚩 "
@@ -70,8 +75,14 @@ class Board
       end
       self[pos].bomb = true
       set_fringe(pos)
+    end
+  end
 
-
+  def set_visible
+    @grid.each do |row|
+      row.each do |tile|
+        tile.hidden = false
+      end
     end
   end
 
